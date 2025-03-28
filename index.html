@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --dark-primary: #1a1a2e;
+            --dark-secondary: #16213e;
+            --accent-color: #0f3460;
+            --highlight: #e94560;
+            --text-light: #f1f1f1;
+            --text-muted: #b8b8b8;
+        }
+        
+        body {
+            background-color: var(--dark-primary);
+            color: var(--text-light);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .navbar {
+            background-color: var(--dark-secondary) !important;
+            border-bottom: 2px solid var(--highlight);
+        }
+        
+        .navbar-brand, .nav-link {
+            color: var(--text-light) !important;
+        }
+        
+        .nav-link:hover {
+            color: var(--highlight) !important;
+        }
+        
+        .section {
+            padding: 4rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .section-title {
+            color: var(--highlight);
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--highlight);
+        }
+        
+        .experience-card {
+            background-color: var(--dark-secondary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--highlight);
+            transition: transform 0.3s ease;
+        }
+        
+        .experience-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .experience-date {
+            color: var(--highlight);
+            font-weight: 500;
+        }
+        
+        footer {
+            background-color: var(--dark-secondary);
+            padding: 2rem 0;
+            text-align: center;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">My Portfolio</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#experience">Experience</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#projects">Projects</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="section">
+        <div class="container text-center">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold mb-4">Hello, I'm <span class="text-highlight">[Your Name]</span></h1>
+                    <p class="lead mb-4">Welcome to my professional portfolio website where I showcase my skills and experience.</p>
+                    <a href="#about" class="btn btn-outline-light btn-lg px-4 me-2">Learn More</a>
+                    <a href="#contact" class="btn btn-danger btn-lg px-4">Contact Me</a>
+                </div>
+                <div class="col-lg-6">
+                    <img src="https://via.placeholder.com/500x500" alt="Profile" class="img-fluid rounded-circle shadow-lg" style="max-width: 300px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section id="about" class="section bg-dark-secondary">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="row">
+                <div class="col-lg-6">
+                    <h3 class="mb-4">Who I Am</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor.</p>
+                    <p>Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus.</p>
+                </div>
+                <div class="col-lg-6">
+                    <h3 class="mb-4">My Skills</h3>
+                    <div class="mb-3">
+                        <h6>Web Development</h6>
+                        <div class="progress">
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: 10%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <h6>UI/UX Design</h6>
+                        <div class="progress">
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <h6>Project Management</h6>
+                        <div class="progress">
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <h6>Data pipelines OwO</h6>
+                        <div class="progress">
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: 85%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Work Experience Section -->
+    <section id="experience" class="section">
+        <div class="container">
+            <h2 class="section-title">Work Experience</h2>
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="experience-card">
+                        <div class="d-flex justify-content-between">
+                            <h3>Senior Developer</h3>
+                            <span class="experience-date">2020 - Present</span>
+                        </div>
+                        <h5 class="text-muted mb-3">Tech Solutions Inc.</h5>
+                        <p>Lead a team of developers in creating innovative web applications. Responsible for architecture decisions, code reviews, and mentoring junior developers.</p>
+                        <ul>
+                            <li>Implemented CI/CD pipeline reducing deployment time by 40%</li>
+                            <li>Introduced React framework improving frontend performance by 30%</li>
+                            <li>Redesigned database schema improving query performance by 60%</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="experience-card">
+                        <div class="d-flex justify-content-between">
+                            <h3>Web Developer</h3>
+                            <span class="experience-date">2017 - 2020</span>
+                        </div>
+                        <h5 class="text-muted mb-3">Digital Creations LLC</h5>
+                        <p>Developed and maintained client websites using modern web technologies. Collaborated with designers to create responsive and accessible interfaces.</p>
+                        <ul>
+                            <li>Built 15+ client websites with 100% client satisfaction</li>
+                            <li>Reduced page load times by optimizing assets and code</li>
+                            <li>Implemented SEO best practices increasing organic traffic</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="experience-card">
+                        <div class="d-flex justify-content-between">
+                            <h3>Junior Developer</h3>
+                            <span class="experience-date">2015 - 2017</span>
+                        </div>
+                        <h5 class="text-muted mb-3">StartUp Ventures</h5>
+                        <p>Assisted in developing web applications and fixing bugs. Learned industry best practices and modern development workflows.</p>
+                        <ul>
+                            <li>Contributed to 3 major product releases</li>
+                            <li>Reduced bug reports by 25% through improved testing</li>
+                            <li>Automated repetitive tasks saving 10+ hours weekly</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section bg-dark-secondary">
+        <div class="container">
+            <h2 class="section-title">My Projects</h2>
+            <div class="row">
+                <!-- Project Card 1 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card bg-dark border-0 h-100">
+                        <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Project 1">
+                        <div class="card-body">
+                            <h5 class="card-title">E-commerce Platform</h5>
+                            <p class="card-text">A full-featured online store with payment integration.</p>
+                            <a href="#" class="btn btn-outline-danger">View Project</a>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Project Card 2 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card bg-dark border-0 h-100">
+                        <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Project 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Task Management App</h5>
+                            <p class="card-text">Collaborative tool for teams to organize work.</p>
+                            <a href="#" class="btn btn-outline-danger">View Project</a>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Project Card 3 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card bg-dark border-0 h-100">
+                        <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Project 3">
+                        <div class="card-body">
+                            <h5 class="card-title">Portfolio Website</h5>
+                            <p class="card-text">Responsive portfolio template for creatives.</p>
+                            <a href="#" class="btn btn-outline-danger">View Project</a>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- "All Projects" Card (New!) -->
+                <div class="col-md-4 mb-4">
+                    <a href="/projects" class="text-decoration-none"> <!-- Link wrapper -->
+                        <div class="card bg-dark border-0 h-100">
+                            <div class="card-body text-center d-flex flex-column justify-content-center align-items-center">
+                                <div class="bg-accent rounded-circle p-4 mb-3"> <!-- Icon circle -->
+                                    <i class="bi bi-grid-3x3-gap-fill" style="font-size: 2rem; color: var(--highlight);"></i>
+                                </div>
+                                <h5 class="card-title">All Projects</h5>
+                                <p class="card-text">Explore my complete portfolio</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p class="mb-0">&copy; 2023 My Portfolio. All rights reserved.</p>
+            <div class="mt-3">
+                <a href="#" class="text-muted me-3"><i class="bi bi-github"></i></a>
+                <a href="#" class="text-muted me-3"><i class="bi bi-linkedin"></i></a>
+                <a href="#" class="text-muted me-3"><i class="bi bi-twitter"></i></a>
+                <a href="#" class="text-muted"><i class="bi bi-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+</body>
+</html>
