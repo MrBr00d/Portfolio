@@ -14,6 +14,9 @@
     color: var(--text-light);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
+  .text-muted{
+    color: var(--text-muted) !important;
+  }
   
   /* Navbar */
   .navbar {
@@ -26,7 +29,11 @@
   .nav-link:hover {
     color: var(--highlight) !important;
   }
-  
+  /* Home */
+  .text-highlight{
+    color: var(--highlight)
+  }
+
   /* Sections */
   .section {
     padding: 4rem 0;
@@ -67,6 +74,7 @@
   
   /* Projects Section */
   #projects .card {
+    color: var(--text-light);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
   #projects .card:hover {
