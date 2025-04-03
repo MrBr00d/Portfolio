@@ -60,76 +60,81 @@
                 Als eerste vindt extractie plaats van de Autoscout24 website. Hierna wordt een kleine transformatie gedaan, de leeftijd in dagen wordt berekend. Deze schone data kan in het vervolg gebruikt worden voor machine learning.
                 Als laatste wordt de data ingeladen in een postgreSQL database. Na dit ETL proces wordt de data gebruikt in een simpel tableau dashboard.</p>
                 <img src="images/ETL.jpg" alt="ETL pijplijn grafische weergave" width="100%">
-                <!-- Form -->
-                <form id="carForm" class="needs-validation" novalidate>
-                  <!-- Make Input -->
-                  <div class="mb-3">
-                    <label for="make" class="form-label">Merk</label>
-                    <input type="text" class="form-control bg-dark text-light" id="make" required>
-                    <div class="invalid-feedback">Zorg ervoor dat de waarde hetzelfde is als in de tableau waarde. Hoofdlettergevoelig.</div>
-                  </div>
-            
-                  <!-- Model Input -->
-                  <div class="mb-3">
-                    <label for="model" class="form-label">Model</label>
-                    <input type="text" class="form-control bg-dark text-light" id="model" required>
-                    <div class="invalid-feedback">Zorg ervoor dat de waarde hetzelfde is als in de tableau waarde. Hoofdlettergevoelig.</div>
-                  </div>
-            
-                  <!-- Date Input -->
-                  <div class="mb-3">
-                    <label for="age" class="form-label">Bouwjaar</label>
-                    <input type="date" class="form-control bg-dark text-light" id="age" required>
-                    <div class="invalid-feedback">Selecteer een datum.</div>
-                  </div>
-            
-                  <!-- Mileage Input -->
-                  <div class="mb-3">
-                    <label for="mileage" class="form-label">Kilometerstand</label>
-                    <input type="number" class="form-control bg-dark text-light" id="mileage" required>
-                    <div class="invalid-feedback">Vul de kilometerstand in zonder punten.</div>
-                  </div>
-            
-                  <!-- Fuel Type Dropdown -->
-                  <div class="mb-3">
-                    <label for="fuel_type" class="form-label">Fuel Type</label>
-                    <select class="form-select bg-dark text-light" id="fuel_type" required>
-                      <option value="" selected disabled>Selecteer brandstof</option>
-                      <option value="b">Benzine</option>
-                      <option value="d">Diesel</option>
-                      <option value="e">Elektrisch</option>
-                      <option value="2">Hybride</option>
-                    </select>
-                    <div class="invalid-feedback">Selecteer een brandstoftype.</div>
-                  </div>
-            
-                  <!-- Transmission Dropdown -->
-                  <div class="mb-3">
-                    <label for="transmission" class="form-label">Transmission</label>
-                    <select class="form-select bg-dark text-light" id="transmission" required>
-                      <option value="" selected disabled>Select transmission</option>
-                      <option value="Handgeschakeld">Handgeschakeld</option>
-                      <option value="Automatisch">Automatisch</option>
-                    </select>
-                    <div class="invalid-feedback">Please select a transmission type.</div>
-                  </div>
-            
-                  <!-- Submit Button -->
-                  <div class="d-grid">
-                    <button type="button" id="predictButton" class="btn btn-danger">
-                      <i class="bi bi-graph-up"></i> Predict Price
-                    </button>
-                  </div>
-                </form>
-              <div id="predictionResult" class="mt-4 text-center" style="display: none;">
-                  <h4 class="text-highlight">Voorspelde prijs</h4>
-                  <div id="predictedPrice" class="display-4 fw-bold my-3" style="color: var(--highlight);"></div>
-              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="card bg-dark border-0 shadow-lg">
+      <br>
+      <div class="card bg-dark border-highlight">
+        <div class="card-body" style="color: #f1f1f1;">
+        <form id="carForm" class="needs-validation" novalidate>
+          <!-- Make Input -->
+          <div class="mb-3">
+            <label for="make" class="form-label">Merk</label>
+            <input type="text" class="form-control bg-dark text-light" id="make" required>
+            <div class="invalid-feedback">Zorg ervoor dat de waarde hetzelfde is als in de tableau waarde. Hoofdlettergevoelig.</div>
+          </div>
+    
+          <!-- Model Input -->
+          <div class="mb-3">
+            <label for="model" class="form-label">Model</label>
+            <input type="text" class="form-control bg-dark text-light" id="model" required>
+            <div class="invalid-feedback">Zorg ervoor dat de waarde hetzelfde is als in de tableau waarde. Hoofdlettergevoelig.</div>
+          </div>
+    
+          <!-- Date Input -->
+          <div class="mb-3">
+            <label for="age" class="form-label">Bouwjaar</label>
+            <input type="date" class="form-control bg-dark text-light" id="age" required>
+            <div class="invalid-feedback">Selecteer een datum.</div>
+          </div>
+    
+          <!-- Mileage Input -->
+          <div class="mb-3">
+            <label for="mileage" class="form-label">Kilometerstand</label>
+            <input type="number" class="form-control bg-dark text-light" id="mileage" required>
+            <div class="invalid-feedback">Vul de kilometerstand in zonder punten.</div>
+          </div>
+    
+          <!-- Fuel Type Dropdown -->
+          <div class="mb-3">
+            <label for="fuel_type" class="form-label">Fuel Type</label>
+            <select class="form-select bg-dark text-light" id="fuel_type" required>
+              <option value="" selected disabled>Selecteer brandstof</option>
+              <option value="b">Benzine</option>
+              <option value="d">Diesel</option>
+              <option value="e">Elektrisch</option>
+              <option value="2">Hybride</option>
+            </select>
+            <div class="invalid-feedback">Selecteer een brandstoftype.</div>
+          </div>
+    
+          <!-- Transmission Dropdown -->
+          <div class="mb-3">
+            <label for="transmission" class="form-label">Transmission</label>
+            <select class="form-select bg-dark text-light" id="transmission" required>
+              <option value="" selected disabled>Select transmission</option>
+              <option value="Handgeschakeld">Handgeschakeld</option>
+              <option value="Automatisch">Automatisch</option>
+            </select>
+            <div class="invalid-feedback">Please select a transmission type.</div>
+          </div>
+    
+          <!-- Submit Button -->
+          <div class="d-grid">
+            <button type="button" id="predictButton" class="btn btn-danger">
+              <i class="bi bi-graph-up"></i> Predict Price
+            </button>
+          </div>
+        </form>
+      <div id="predictionResult" class="mt-4 text-center" style="display: none;">
+          <h4 class="text-highlight">Voorspelde prijs</h4>
+          <div id="predictedPrice" class="display-4 fw-bold my-3" style="color: var(--highlight);"></div>
+      </div>
+      </div>
+      </div>
+      <br>
+      <div class="card bg-dark border-highlight">
         <div class="card-body p-0">
           <div class='tableauPlaceholder' id='viz1743274901826' style='position: relative'><noscript><a href='#'><img alt='Dashboard 1 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Au&#47;AutoScout24_17427610285650&#47;Dashboard1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='AutoScout24_17427610285650&#47;Dashboard1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Au&#47;AutoScout24_17427610285650&#47;Dashboard1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1743274901826');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else { vizElement.style.width='100%';vizElement.style.height='827px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
         </div>
