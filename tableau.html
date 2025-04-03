@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,16 +18,17 @@
     /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
     _paq.push(['trackPageView']);
     _paq.push(['enableLinkTracking']);
-    (function() {
-    var u="//mrbrood.zapto.org/analytics/";
-    _paq.push(['setTrackerUrl', u+'rainbow']);
-    _paq.push(['setSiteId', '1']);
-    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-    g.async=true; g.src=u+'unicorn'; s.parentNode.insertBefore(g,s);
+    (function () {
+      var u = "//mrbrood.zapto.org/analytics/";
+      _paq.push(['setTrackerUrl', u + 'rainbow']);
+      _paq.push(['setSiteId', '1']);
+      var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+      g.async = true; g.src = u + 'unicorn'; s.parentNode.insertBefore(g, s);
     })();
-</script>
-  <!-- End Matomo Code -->  
+  </script>
+  <!-- End Matomo Code -->
 </head>
+
 <body>
   <!-- Navigation (Same as index.html) -->
   <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
@@ -55,11 +57,16 @@
           <div class="card bg-dark border-highlight">
             <div class="card-body" style="color: #f1f1f1;">
               <h5 class="card-title text-highlight"><i class="bi bi-lightbulb"></i> Dashboard</h5>
-              <p>In dit dashboard zie je verkoopprijs van auto op Autoscout24. Je kan de verkoopprijs vergelijken met de leeftijd van de auto en <i>milage</i> oftewel het aantal kilometers op de teller.</p>
-              <p>Dit project is een volledig ETL project gebundeld in docker. De broncode is <a href="https://github.com/MrBr00d/AutoScoutScraper">hier</a> te vinden.<br>
-                Als eerste vindt extractie plaats van de Autoscout24 website. Hierna wordt een kleine transformatie gedaan, de leeftijd in dagen wordt berekend. Deze schone data kan in het vervolg gebruikt worden voor machine learning.
-                Als laatste wordt de data ingeladen in een postgreSQL database. Na dit ETL proces wordt de data gebruikt in een simpel tableau dashboard.</p>
-                <img src="images/ETL.jpg" alt="ETL pijplijn grafische weergave" width="100%">
+              <p>In dit dashboard zie je verkoopprijs van auto op Autoscout24. Je kan de verkoopprijs vergelijken met de
+                leeftijd van de auto en <i>milage</i> oftewel het aantal kilometers op de teller.</p>
+              <p>Dit project is een volledig ETL project gebundeld in docker. De broncode is <a
+                  href="https://github.com/MrBr00d/AutoScoutScraper">hier</a> te vinden.<br>
+                Als eerste vindt extractie plaats van de Autoscout24 website. Hierna wordt een kleine transformatie
+                gedaan, de leeftijd in dagen wordt berekend. Deze schone data kan in het vervolg gebruikt worden voor
+                machine learning.
+                Als laatste wordt de data ingeladen in een postgreSQL database. Na dit ETL proces wordt de data gebruikt
+                in een simpel tableau dashboard.</p>
+              <img src="images/ETL.jpg" alt="ETL pijplijn grafische weergave" width="100%">
             </div>
           </div>
         </div>
@@ -67,135 +74,161 @@
       <br>
       <div class="card bg-dark border-highlight">
         <div class="card-body" style="color: #f1f1f1;">
-        <form id="carForm" class="needs-validation" novalidate>
-          <!-- Make Input -->
-          <div class="mb-3">
-            <label for="make" class="form-label">Merk</label>
-            <input type="text" class="form-control bg-dark text-light" id="make" required>
-            <div class="invalid-feedback">Zorg ervoor dat de waarde hetzelfde is als in de tableau waarde. Hoofdlettergevoelig.</div>
+          <h5 class="card-title text-highlight"><i class="bi bi-search"></i> Voorspel autowaarde</h5>
+          <p>Op basis van alle data is een <a href="https://xgboost.readthedocs.io/en/latest/index.html">XGBoost</a>
+            regressie algoritme getraind.</p>
+          <p>Om een voorspelling te doen van een auto vul je onderstaand formulier in. Let op dat bij het intypen van
+            merk/model het een exacte match is met het merk/model onder in de grafiek. Bij de grafiek staat aan de rechterkant een filter waar je kan zien wat de juiste waarde is. Zo is het niet
+            <b>SEAT</b> maar <b>seat</b>. De meeste merken/modellen zullen met kleine letters zijn.</p>
+          <form id="carForm" class="needs-validation" novalidate>
+            <!-- Make Input -->
+            <div class="mb-3">
+              <label for="make" class="form-label">Merk</label>
+              <input type="text" class="form-control bg-dark text-light" id="make" required>
+              <div class="invalid-feedback">Zorg ervoor dat de waarde hetzelfde is als in de tableau waarde.
+                Hoofdlettergevoelig.</div>
+            </div>
+
+            <!-- Model Input -->
+            <div class="mb-3">
+              <label for="model" class="form-label">Model</label>
+              <input type="text" class="form-control bg-dark text-light" id="model" required>
+              <div class="invalid-feedback">Zorg ervoor dat de waarde hetzelfde is als in de tableau waarde.
+                Hoofdlettergevoelig.</div>
+            </div>
+
+            <!-- Date Input -->
+            <div class="mb-3">
+              <label for="age" class="form-label">Bouwjaar</label>
+              <input type="date" class="form-control bg-dark text-light" id="age" required>
+              <div class="invalid-feedback">Selecteer een datum.</div>
+            </div>
+
+            <!-- Mileage Input -->
+            <div class="mb-3">
+              <label for="mileage" class="form-label">Kilometerstand</label>
+              <input type="number" class="form-control bg-dark text-light" id="mileage" required>
+              <div class="invalid-feedback">Vul de kilometerstand in zonder punten.</div>
+            </div>
+
+            <!-- Fuel Type Dropdown -->
+            <div class="mb-3">
+              <label for="fuel_type" class="form-label">Fuel Type</label>
+              <select class="form-select bg-dark text-light" id="fuel_type" required>
+                <option value="" selected disabled>Selecteer brandstof</option>
+                <option value="b">Benzine</option>
+                <option value="d">Diesel</option>
+                <option value="e">Elektrisch</option>
+                <option value="2">Hybride</option>
+              </select>
+              <div class="invalid-feedback">Selecteer een brandstoftype.</div>
+            </div>
+
+            <!-- Transmission Dropdown -->
+            <div class="mb-3">
+              <label for="transmission" class="form-label">Transmission</label>
+              <select class="form-select bg-dark text-light" id="transmission" required>
+                <option value="" selected disabled>Select transmission</option>
+                <option value="Handgeschakeld">Handgeschakeld</option>
+                <option value="Automatisch">Automatisch</option>
+              </select>
+              <div class="invalid-feedback">Please select a transmission type.</div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-grid">
+              <button type="button" id="predictButton" class="btn btn-danger">
+                <i class="bi bi-graph-up"></i> Predict Price
+              </button>
+            </div>
+          </form>
+          <div id="predictionResult" class="mt-4 text-center" style="display: none;">
+            <h4 class="text-highlight">Voorspelde prijs</h4>
+            <div id="predictedPrice" class="display-4 fw-bold my-3" style="color: var(--highlight);"></div>
           </div>
-    
-          <!-- Model Input -->
-          <div class="mb-3">
-            <label for="model" class="form-label">Model</label>
-            <input type="text" class="form-control bg-dark text-light" id="model" required>
-            <div class="invalid-feedback">Zorg ervoor dat de waarde hetzelfde is als in de tableau waarde. Hoofdlettergevoelig.</div>
-          </div>
-    
-          <!-- Date Input -->
-          <div class="mb-3">
-            <label for="age" class="form-label">Bouwjaar</label>
-            <input type="date" class="form-control bg-dark text-light" id="age" required>
-            <div class="invalid-feedback">Selecteer een datum.</div>
-          </div>
-    
-          <!-- Mileage Input -->
-          <div class="mb-3">
-            <label for="mileage" class="form-label">Kilometerstand</label>
-            <input type="number" class="form-control bg-dark text-light" id="mileage" required>
-            <div class="invalid-feedback">Vul de kilometerstand in zonder punten.</div>
-          </div>
-    
-          <!-- Fuel Type Dropdown -->
-          <div class="mb-3">
-            <label for="fuel_type" class="form-label">Fuel Type</label>
-            <select class="form-select bg-dark text-light" id="fuel_type" required>
-              <option value="" selected disabled>Selecteer brandstof</option>
-              <option value="b">Benzine</option>
-              <option value="d">Diesel</option>
-              <option value="e">Elektrisch</option>
-              <option value="2">Hybride</option>
-            </select>
-            <div class="invalid-feedback">Selecteer een brandstoftype.</div>
-          </div>
-    
-          <!-- Transmission Dropdown -->
-          <div class="mb-3">
-            <label for="transmission" class="form-label">Transmission</label>
-            <select class="form-select bg-dark text-light" id="transmission" required>
-              <option value="" selected disabled>Select transmission</option>
-              <option value="Handgeschakeld">Handgeschakeld</option>
-              <option value="Automatisch">Automatisch</option>
-            </select>
-            <div class="invalid-feedback">Please select a transmission type.</div>
-          </div>
-    
-          <!-- Submit Button -->
-          <div class="d-grid">
-            <button type="button" id="predictButton" class="btn btn-danger">
-              <i class="bi bi-graph-up"></i> Predict Price
-            </button>
-          </div>
-        </form>
-      <div id="predictionResult" class="mt-4 text-center" style="display: none;">
-          <h4 class="text-highlight">Voorspelde prijs</h4>
-          <div id="predictedPrice" class="display-4 fw-bold my-3" style="color: var(--highlight);"></div>
-      </div>
-      </div>
+        </div>
       </div>
       <br>
       <div class="card bg-dark border-highlight">
         <div class="card-body p-0">
-          <div class='tableauPlaceholder' id='viz1743274901826' style='position: relative'><noscript><a href='#'><img alt='Dashboard 1 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Au&#47;AutoScout24_17427610285650&#47;Dashboard1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='AutoScout24_17427610285650&#47;Dashboard1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Au&#47;AutoScout24_17427610285650&#47;Dashboard1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1743274901826');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else { vizElement.style.width='100%';vizElement.style.height='827px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+          <div class='tableauPlaceholder' id='viz1743274901826' style='position: relative'><noscript><a href='#'><img
+                  alt='Dashboard 1 '
+                  src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Au&#47;AutoScout24_17427610285650&#47;Dashboard1&#47;1_rss.png'
+                  style='border: none' /></a></noscript><object class='tableauViz' style='display:none;'>
+              <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+              <param name='embed_code_version' value='3' />
+              <param name='site_root' value='' />
+              <param name='name' value='AutoScout24_17427610285650&#47;Dashboard1' />
+              <param name='tabs' value='no' />
+              <param name='toolbar' value='yes' />
+              <param name='static_image'
+                value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Au&#47;AutoScout24_17427610285650&#47;Dashboard1&#47;1.png' />
+              <param name='animate_transition' value='yes' />
+              <param name='display_static_image' value='yes' />
+              <param name='display_spinner' value='yes' />
+              <param name='display_overlay' value='yes' />
+              <param name='display_count' value='yes' />
+              <param name='language' value='en-US' />
+              <param name='filter' value='publish=yes' />
+            </object></div>
+          <script
+            type='text/javascript'>                    var divElement = document.getElementById('viz1743274901826'); var vizElement = divElement.getElementsByTagName('object')[0]; if (divElement.offsetWidth > 800) { vizElement.style.width = '100%'; vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px'; } else if (divElement.offsetWidth > 500) { vizElement.style.width = '100%'; vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px'; } else { vizElement.style.width = '100%'; vizElement.style.height = '827px'; } var scriptElement = document.createElement('script'); scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js'; vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
         </div>
       </div>
     </div>
     <script>
-      document.getElementById('predictButton').addEventListener('click', function() {
-          const form = document.getElementById('carForm');
-          
-          if (!form.checkValidity()) {
-              form.classList.add('was-validated');
-              return;
-          }
+      document.getElementById('predictButton').addEventListener('click', function () {
+        const form = document.getElementById('carForm');
 
-          const make = document.getElementById('make').value;
-          const model = document.getElementById('model').value;
-          const age = document.getElementById('age').value;
-          const mileage = document.getElementById('mileage').value;
-          const fuel_type = document.getElementById('fuel_type').value;
-          const transmission = document.getElementById('transmission').value;
+        if (!form.checkValidity()) {
+          form.classList.add('was-validated');
+          return;
+        }
 
-          // Show loading state
-          const button = document.getElementById('predictButton');
-          button.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Predicting...';
-          button.disabled = true;
+        const make = document.getElementById('make').value;
+        const model = document.getElementById('model').value;
+        const age = document.getElementById('age').value;
+        const mileage = document.getElementById('mileage').value;
+        const fuel_type = document.getElementById('fuel_type').value;
+        const transmission = document.getElementById('transmission').value;
 
-          // Simulate API call (replace with your actual API endpoint)
-          fetch('http://localhost:8000/predict', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                  make: make,
-                  model: model,
-                  age: age,
-                  mileage: mileage,
-                  fuel_type: fuel_type,
-                  transmission: transmission
-              })
+        // Show loading state
+        const button = document.getElementById('predictButton');
+        button.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Predicting...';
+        button.disabled = true;
+
+        // Simulate API call (replace with your actual API endpoint)
+        fetch('http://localhost:8000/predict', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            make: make,
+            model: model,
+            age: age,
+            mileage: mileage,
+            fuel_type: fuel_type,
+            transmission: transmission
           })
+        })
           .then(response => response.json())
           .then(data => {
-              // Display results
-              document.getElementById('predictedPrice').textContent = '€' + data.predicted_price.toLocaleString();
-              document.getElementById('predictionResult').style.display = 'block';
-              
-              // Scroll to results
-              // document.getElementById('predictionResult').scrollIntoView({ behavior: 'smooth' });
+            // Display results
+            document.getElementById('predictedPrice').textContent = '€' + data.predicted_price.toLocaleString();
+            document.getElementById('predictionResult').style.display = 'block';
           })
           .catch(error => {
-              console.error('Error:', error);
-              document.getElementById('predictedPrice').textContent = 'Error predicting price';
-              document.getElementById('predictionResult').style.display = 'block';
+            console.error('Error:', error);
+            document.getElementById('predictedPrice').textContent = 'Error predicting price';
+            document.getElementById('predictionResult').style.display = 'block';
           })
           .finally(() => {
-              button.innerHTML = '<i class="bi bi-graph-up"></i> Predict Price';
-              button.disabled = false;
+            button.innerHTML = '<i class="bi bi-graph-up"></i> Predict Price';
+            button.disabled = false;
           });
       });
-  </script>
+    </script>
   </section>
 
   <!-- Same footer as index.html -->
@@ -208,4 +241,5 @@
   <!-- Same scripts as index.html -->
   <script src="styles/Bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
