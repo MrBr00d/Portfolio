@@ -18,13 +18,13 @@
     _paq.push(['trackPageView']);
     _paq.push(['enableLinkTracking']);
     (function() {
-    var u="//192.168.2.30:8082/";
-    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    var u="//mrbrood.zapto.org/analytics/";
+    _paq.push(['setTrackerUrl', u+'rainbow']);
     _paq.push(['setSiteId', '1']);
     var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    g.async=true; g.src=u+'unicorn'; s.parentNode.insertBefore(g,s);
     })();
-  </script>
+</script>
   <!-- End Matomo Code -->  
 </head>
 <body>
@@ -59,6 +59,72 @@
               <p>Dit project is een volledig ETL project gebundeld in docker. De broncode is <a href="https://github.com/MrBr00d/AutoScoutScraper">hier</a> te vinden.<br>
                 Als eerste vindt extractie plaats van de Autoscout24 website. Hierna wordt een kleine transformatie gedaan, de leeftijd in dagen wordt berekend. Deze schone data kan in het vervolg gebruikt worden voor machine learning.
                 Als laatste wordt de data ingeladen in een postgreSQL database. Na dit ETL proces wordt de data gebruikt in een simpel tableau dashboard.</p>
+                <img src="images/ETL.jpg" alt="ETL pijplijn grafische weergave" width="100%">
+                <!-- Form -->
+                <form id="carForm" class="needs-validation" novalidate>
+                  <!-- Make Input -->
+                  <div class="mb-3">
+                    <label for="make" class="form-label">Merk</label>
+                    <input type="text" class="form-control bg-dark text-light" id="make" required>
+                    <div class="invalid-feedback">Zorg ervoor dat de waarde hetzelfde is als in de tableau waarde. Hoofdlettergevoelig.</div>
+                  </div>
+            
+                  <!-- Model Input -->
+                  <div class="mb-3">
+                    <label for="model" class="form-label">Model</label>
+                    <input type="text" class="form-control bg-dark text-light" id="model" required>
+                    <div class="invalid-feedback">Zorg ervoor dat de waarde hetzelfde is als in de tableau waarde. Hoofdlettergevoelig.</div>
+                  </div>
+            
+                  <!-- Date Input -->
+                  <div class="mb-3">
+                    <label for="age" class="form-label">Bouwjaar</label>
+                    <input type="date" class="form-control bg-dark text-light" id="age" required>
+                    <div class="invalid-feedback">Selecteer een datum.</div>
+                  </div>
+            
+                  <!-- Mileage Input -->
+                  <div class="mb-3">
+                    <label for="mileage" class="form-label">Kilometerstand</label>
+                    <input type="number" class="form-control bg-dark text-light" id="mileage" required>
+                    <div class="invalid-feedback">Vul de kilometerstand in zonder punten.</div>
+                  </div>
+            
+                  <!-- Fuel Type Dropdown -->
+                  <div class="mb-3">
+                    <label for="fuel_type" class="form-label">Fuel Type</label>
+                    <select class="form-select bg-dark text-light" id="fuel_type" required>
+                      <option value="" selected disabled>Selecteer brandstof</option>
+                      <option value="b">Benzine</option>
+                      <option value="d">Diesel</option>
+                      <option value="e">Elektrisch</option>
+                      <option value="2">Hybride</option>
+                    </select>
+                    <div class="invalid-feedback">Selecteer een brandstoftype.</div>
+                  </div>
+            
+                  <!-- Transmission Dropdown -->
+                  <div class="mb-3">
+                    <label for="transmission" class="form-label">Transmission</label>
+                    <select class="form-select bg-dark text-light" id="transmission" required>
+                      <option value="" selected disabled>Select transmission</option>
+                      <option value="Handgeschakeld">Handgeschakeld</option>
+                      <option value="Automatisch">Automatisch</option>
+                    </select>
+                    <div class="invalid-feedback">Please select a transmission type.</div>
+                  </div>
+            
+                  <!-- Submit Button -->
+                  <div class="d-grid">
+                    <button type="button" id="predictButton" class="btn btn-danger">
+                      <i class="bi bi-graph-up"></i> Predict Price
+                    </button>
+                  </div>
+                </form>
+              <div id="predictionResult" class="mt-4 text-center" style="display: none;">
+                  <h4 class="text-highlight">Voorspelde prijs</h4>
+                  <div id="predictedPrice" class="display-4 fw-bold my-3" style="color: var(--highlight);"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -69,6 +135,62 @@
         </div>
       </div>
     </div>
+    <script>
+      document.getElementById('predictButton').addEventListener('click', function() {
+          const form = document.getElementById('carForm');
+          
+          if (!form.checkValidity()) {
+              form.classList.add('was-validated');
+              return;
+          }
+
+          const make = document.getElementById('make').value;
+          const model = document.getElementById('model').value;
+          const age = document.getElementById('age').value;
+          const mileage = document.getElementById('mileage').value;
+          const fuel_type = document.getElementById('fuel_type').value;
+          const transmission = document.getElementById('transmission').value;
+
+          // Show loading state
+          const button = document.getElementById('predictButton');
+          button.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Predicting...';
+          button.disabled = true;
+
+          // Simulate API call (replace with your actual API endpoint)
+          fetch('http://localhost:8000/predict', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                  make: make,
+                  model: model,
+                  age: age,
+                  mileage: mileage,
+                  fuel_type: fuel_type,
+                  transmission: transmission
+              })
+          })
+          .then(response => response.json())
+          .then(data => {
+              // Display results
+              document.getElementById('predictedPrice').textContent = '€' + data.predicted_price.toLocaleString();
+              document.getElementById('predictionResult').style.display = 'block';
+              
+              // Scroll to results
+              // document.getElementById('predictionResult').scrollIntoView({ behavior: 'smooth' });
+          })
+          .catch(error => {
+              console.error('Error:', error);
+              document.getElementById('predictedPrice').textContent = 'Error predicting price';
+              document.getElementById('predictionResult').style.display = 'block';
+          })
+          .finally(() => {
+              button.innerHTML = '<i class="bi bi-graph-up"></i> Predict Price';
+              button.disabled = false;
+          });
+      });
+  </script>
   </section>
 
   <!-- Same footer as index.html -->
