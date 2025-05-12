@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://nvvliet.nl/sitemap.xml
